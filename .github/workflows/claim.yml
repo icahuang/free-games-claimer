@@ -1,0 +1,19 @@
+name: Claim Free Games
+on:
+  schedule:
+    - cron: '0 18 * * 4,5' # 每周四和周五 UTC 18:00 运行（对应北京时间周五凌晨）
+  workflow_dispatch: # 支持手动触发
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+      - run: node epic-games.js
+        env:
+          EMAIL: ${{ secrets.EPIC_EMAIL }}
+          PASSWORD: ${{ secrets.EPIC_PASSWORD }}
