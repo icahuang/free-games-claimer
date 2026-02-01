@@ -13,6 +13,11 @@ jobs:
         with:
           node-version: 20
       - run: npm install
+      # --- 插入下面这段 ---
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        if: always() # 强制运行，方便我们调试
+      # ------------------
       - run: node epic-games.js
         env:
           EMAIL: ${{ secrets.EPIC_EMAIL }}
